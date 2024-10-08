@@ -123,3 +123,146 @@ button:hover:not(:disabled) {
   padding: 20px 0;
 }
 
+/* Global light mode styles */
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-top: 20px;
+}
+
+.transaction-table {
+  padding: 20px;
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.statistics {
+  padding: 20px;
+  background-color: #e8f5e9;
+  border: 1px solid #4caf50;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.statistic-item {
+  margin: 10px 0;
+  font-size: 16px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+button {
+  padding: 10px 15px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007BFF;
+  color: white;
+  cursor: pointer;
+}
+
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+button:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+/* Dark mode styles */
+body.dark-mode {
+  background-color: #1e1e1e;
+  color: #f0f0f0;
+}
+
+.dark-mode .transaction-table,
+.dark-mode .chart-container,
+.dark-mode .statistics {
+  background-color: #333;
+  color: #f0f0f0;
+  box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode h1 {
+  color: #fff;
+}
+
+.dark-mode th {
+  background-color: #007BFF;
+}
+
+.dark-mode td {
+  color: #f0f0f0;
+}
+
+.dark-mode tr:hover {
+  background-color: #555; /* Change the row hover background to a darker shade */
+}
+
+.dark-mode button {
+  background-color: #555;
+}
+
+.dark-mode button:hover:not(:disabled) {
+  background-color: #777;
+}
+
+/* Fix statistics box for dark mode */
+.dark-mode .statistics {
+  background-color: #444;
+  border-color: #007BFF; /* Dark mode border color */
+}
+
+.dark-mode .statistic-item {
+  color: #f0f0f0;
+}
+
+/* Position the dark mode toggle button */
+.theme-toggle-btn {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000; /* Make sure the button is always visible */
+}
+
+.theme-toggle-btn:hover {
+  background-color: #0056b3;
+}
+
+
