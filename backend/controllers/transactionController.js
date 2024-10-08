@@ -111,24 +111,55 @@ const getStatisticsData = async (month) => {
 const getBarChartData = async (month) => {
   const monthNumber = parseInt(month, 10);
 
+  const boundaries = [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000];
+  const rangeLabels = boundaries.slice(1).map((boundary, index) => {
+    const lowerBound = boundaries[index];
+    const upperBound = boundary;
+    return `${lowerBound} - ${upperBound}`;
+  });
+
+  rangeLabels.push("901+");
+
   const result = await Transaction.aggregate([
     {
       $match: {
         $expr: {
-          $eq: [{ $month: "$dateOfSale" }, monthNumber]
-        }
-      }
+          $eq: [{ $month: "$dateOfSale" }, monthNumber],
+        },
+      },
     },
     {
       $bucket: {
         groupBy: "$price",
-        boundaries: [0, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000],
-        default: "901-above",
-        output: { count: { $sum: 1 } }
+        boundaries: boundaries,
+        default: "901+",
+        output: { count: { $sum: 1 } },
+      },
+    },
+  ]);
+
+  const countMap = rangeLabels.reduce((acc, label) => {
+    acc[label] = 0;
+    return acc;
+  }, {});
+
+  result.forEach((item) => {
+    if (item._id === "901+") {
+      countMap["901+"] = item.count;
+    } else {
+      const index = boundaries.indexOf(item._id);
+      if (index > 0) {
+        const lowerBound = boundaries[index - 1];
+        const upperBound = boundaries[index];
+        countMap[`${lowerBound} - ${upperBound}`] = item.count;
       }
     }
-  ]);
-  return result;
+  });
+
+  return Object.entries(countMap).map(([priceRange, count]) => ({
+    priceRange,
+    count,
+  }));
 };
 
 const getPieChartData = async (month) => {
@@ -170,7 +201,9 @@ exports.getStatistics = async (req, res) => {
 
 exports.getBarChart = async (req, res) => {
   const { month } = req.query;
-  if (!month) return res.status(400).json({ error: "Month parameter is required" });
+  if (!month) {
+    return res.status(400).json({ error: "Month parameter is required" });
+  }
 
   if (!/^(0?[1-9]|1[0-2])$/.test(month)) {
     return res.status(400).json({ error: "Invalid month parameter. It must be between 1 and 12." });
