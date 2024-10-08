@@ -46,13 +46,17 @@
 
 1. **Start the development server:**
 
-   In the root directory, run:
+   In the backend directory, run:
 
    ```bash
    npm run dev
    ```
 
-   This command will start both the backend and frontend applications.
+   In the frontend directory, run:
+
+   ```bash
+   npm run dev
+   ```
 
 ### API Documentation
 
