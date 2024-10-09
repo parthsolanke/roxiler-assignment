@@ -1,5 +1,7 @@
 # roxiler-assignment
 
+![img](./public/ss.png)
+
 ## Getting Started
 
 ### Prerequisites
